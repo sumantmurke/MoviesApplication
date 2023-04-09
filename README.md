@@ -23,6 +23,7 @@ In order to set up the database please find a sql dump (Bill.sql)
  1. Make sure you have all the technologies listed above. 
  2. clone the repo. 
  3. Please create the scheama for the mysql that is part of this repo (Bill.sql).
+ 4. Update the application.properties file (src/main/resources/application.properties) with DB location and and variables as per your settings.
  4. run mvn compile (to compile and download all the dependecies).
  5. to run the web service please run "mvn spring-boot:run"
 
