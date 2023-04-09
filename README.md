@@ -2,7 +2,7 @@
 This repository is a basic web service that uses following technologies 
   1. Spring framework
   2. Kotlin
-  3. Mysql for databses 
+  3. Mysql for databse
 
 In this simple web services we do CRUD operations on Movies and Actors associated to it.
 
