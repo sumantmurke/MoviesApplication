@@ -1,9 +1,7 @@
 package com.bill.MoviesApplication.Service
 
 import com.bill.MoviesApplication.Model.Actor
-import com.bill.MoviesApplication.Model.Movie
 import com.bill.MoviesApplication.Repository.ActorRepository
-import com.bill.MoviesApplication.Repository.MovieRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
@@ -17,18 +15,32 @@ class ActorService(val repository: ActorRepository) {
     fun getById(id: Int): Actor = repository.findByIdOrNull(id) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
     fun create(actor : Actor): Actor {
-        println("Adding  actor")
+
         try{
             repository.save(actor)
-        }catch(e : java.sql.SQLIntegrityConstraintViolationException){
-            throw ResponseStatusException(HttpStatus.CONFLICT)
+        }catch(e : org.springframework.dao.DataIntegrityViolationException){
+            throw ResponseStatusException(HttpStatus.CONFLICT, "The actor you are trying to add is already present")
         }
         return actor
     }
 
     fun remove(id: Int) {
-        println("Removing id")
-        if (repository.existsById(id)) repository.deleteById(id)
+
+        if (repository.existsById(id)) {
+            try{
+                repository.deleteById(id)
+            }catch (e : org.springframework.dao.DataIntegrityViolationException){
+                throw ResponseStatusException(HttpStatus.CONFLICT, "The actor you are trying to delete is already part of another movie")
+            }
+
+        }
         else throw ResponseStatusException(HttpStatus.NOT_FOUND)
+    }
+
+    fun update(id: Int, actor: Actor): Actor {
+        return if (repository.existsById(id)) {
+            actor.id = id
+            repository.save(actor)
+        } else throw ResponseStatusException(HttpStatus.NOT_FOUND)
     }
 }

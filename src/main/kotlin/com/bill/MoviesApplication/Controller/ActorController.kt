@@ -9,26 +9,25 @@ import org.springframework.web.bind.annotation.*
 @RestController
 class ActorController(val service: ActorService) {
 
-    @GetMapping("/helloactor")
-    fun getHello() = "Hello actor"
-
     @GetMapping
-    fun getAllPlayers() = service.getAll()
+    fun getAllActors() = service.getAll()
 
     @GetMapping("/{id}")
-    fun getPlayer(@PathVariable id: Int) = service.getById(id)
+    fun getActor(@PathVariable id: Int) = service.getById(id)
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun savePlayer(@RequestBody actor: Actor): Actor = service.create(actor)
+    fun saveActor(@RequestBody actor: Actor): Actor = service.create(actor)
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deletePlayer(@PathVariable id: Int) = service.remove(id)
+    fun deleteActor(@PathVariable id: Int) = service.remove(id)
 
-    /*
+
     @PutMapping("/{id}")
-    fun updatePlayer(
-        @PathVariable id: Long, @RequestBody movie: Movie
-    ) = service.update(id, movie) */
+    fun updateActor(
+        @PathVariable id: Int, @RequestBody actor: Actor
+    ) = service.update(id, actor)
 }
+
+

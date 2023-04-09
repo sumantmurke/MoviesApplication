@@ -4,31 +4,40 @@ import com.bill.MoviesApplication.Model.Movie
 import com.bill.MoviesApplication.Service.MovieService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.server.ResponseStatusException
 
 @RequestMapping("api/v1/movies")
 @RestController
 class MovieController(val service: MovieService) {
 
-    @GetMapping("/hello")
-    fun getHello() = "Hello shreya"
-
     @GetMapping
-    fun getAllPlayers() = service.getAll()
+    fun getAllMovies() = service.getAll()
 
     @GetMapping("/{id}")
-    fun getPlayer(@PathVariable id: Int) = service.getById(id)
+    fun getMovie(@PathVariable id: Int) = service.getById(id)
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun savePlayer(@RequestBody movie: Movie): Movie = service.create(movie)
+    fun saveMovie(@RequestBody movie: Movie): Movie {
+
+        if (movie.title.isNullOrEmpty() || movie.releaseDate.isNullOrEmpty()){
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Title and release data are required fields")
+        }
+
+        if(movie.actors.isEmpty()){
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Movie should have at least one actor")
+        }
+
+        return service.create(movie)
+    }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deletePlayer(@PathVariable id: Int) = service.remove(id)
+    fun deleteMovie(@PathVariable id: Int) = service.remove(id)
 
-    /*
+
     @PutMapping("/{id}")
-    fun updatePlayer(
-        @PathVariable id: Long, @RequestBody movie: Movie
-    ) = service.update(id, movie) */
+    fun updateMovie(
+        @PathVariable id: Int, @RequestBody movie: Movie
+    ) = service.update(id, movie)
 }
