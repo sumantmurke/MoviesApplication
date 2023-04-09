@@ -7,6 +7,11 @@ import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
 
+/**
+ * @author  Sumant Murke (sumantmurke)
+ * @version 1.0
+ */
+
 @Service
 class ActorService(val repository: ActorRepository) {
 

@@ -6,6 +6,11 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 
+/**
+ * @author  Sumant Murke (sumantmurke)
+ * @version 1.0
+ */
+
 @RequestMapping("api/v1/movies")
 @RestController
 class MovieController(val service: MovieService) {

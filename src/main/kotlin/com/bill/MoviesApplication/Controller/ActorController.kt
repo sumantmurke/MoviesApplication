@@ -5,6 +5,11 @@ import com.bill.MoviesApplication.Service.ActorService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
+/**
+ * @author  Sumant Murke (sumantmurke)
+ * @version 1.0
+ */
+
 @RequestMapping("api/v1/actors")
 @RestController
 class ActorController(val service: ActorService) {
