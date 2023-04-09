@@ -8,7 +8,7 @@ This repository is a basic web service that uses following technologies
 
 In this simple web services we do CRUD operations on Movies and Actors associated to it.
 
-**This web service covers below functionalities **
+This web service covers below functionalities 
   1. It ensure that actors and movies are individually unique.
   2. An individual actor will not appear more than once in a movie.
   3. Movie title and release date are required and the combination of these two fields must be unique.
@@ -19,8 +19,7 @@ In this simple web services we do CRUD operations on Movies and Actors associate
 
 In order to set up the database please find a sql dump (Bill.sql)
 
-
-**Steps to run the project. **
+**Steps to run the project **
  1. Make sure you have all the technologies listed above. 
  2. clone the repo. 
  3. Please create the scheama for the mysql that is part of this repo (Bill.sql).
