@@ -7,6 +7,7 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
+import java.util.*
 
 /**
  * @author  Sumant Murke (sumantmurke)
@@ -18,10 +19,11 @@ class MovieService(val repository: MovieRepository) {
 
     fun getAll(): List<Movie> = repository.findAll()
 
-    fun getById(id: Int): Movie = repository.findByIdOrNull(id) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
+    fun getById(id: Int): Movie= repository.findByIdOrNull(id) ?: throw ResponseStatusException(
+        HttpStatus.NOT_FOUND, "The movie that you are trying to find was not found")
 
     fun create(movie: Movie): Movie{
-        var resp: Movie? = null
+        var resp: Movie?
 
         try{
             resp = repository.save(movie)
@@ -32,20 +34,20 @@ class MovieService(val repository: MovieRepository) {
             throw ResponseStatusException(HttpStatus.CONFLICT, "The movie you are trying to add is already present")
         }
 
-        return resp!!
+        return resp
     }
 
     fun remove(id: Int) {
 
         if (repository.existsById(id)) repository.deleteById(id)
-        else throw ResponseStatusException(HttpStatus.NOT_FOUND)
+        else throw ResponseStatusException(HttpStatus.NOT_FOUND, "The movie that you are trying to remove was not found")
     }
 
     fun update(id: Int, movie: Movie): Movie {
         return if (repository.existsById(id)) {
             movie.id = id
             repository.save(movie)
-        } else throw ResponseStatusException(HttpStatus.NOT_FOUND)
+        } else throw ResponseStatusException(HttpStatus.NOT_FOUND, "The movie that you are trying to update was not found")
     }
 
 }

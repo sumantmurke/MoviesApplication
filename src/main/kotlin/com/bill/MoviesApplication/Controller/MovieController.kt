@@ -40,7 +40,6 @@ class MovieController(val service: MovieService) {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteMovie(@PathVariable id: Int) = service.remove(id)
 
-
     @PutMapping("/{id}")
     fun updateMovie(
         @PathVariable id: Int, @RequestBody movie: Movie

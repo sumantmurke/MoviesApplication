@@ -17,7 +17,8 @@ class ActorService(val repository: ActorRepository) {
 
     fun getAll(): List<Actor> = repository.findAll()
 
-    fun getById(id: Int): Actor = repository.findByIdOrNull(id) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
+    fun getById(id: Int): Actor = repository.findByIdOrNull(id) ?: throw ResponseStatusException(
+        HttpStatus.NOT_FOUND, "The actor that you are trying to find was not found")
 
     fun create(actor : Actor): Actor {
 
@@ -35,17 +36,18 @@ class ActorService(val repository: ActorRepository) {
             try{
                 repository.deleteById(id)
             }catch (e : org.springframework.dao.DataIntegrityViolationException){
-                throw ResponseStatusException(HttpStatus.CONFLICT, "The actor you are trying to delete is already part of another movie")
+                throw ResponseStatusException(
+                    HttpStatus.CONFLICT, "The actor you are trying to delete is already part of another movie")
             }
 
         }
-        else throw ResponseStatusException(HttpStatus.NOT_FOUND)
+        else throw ResponseStatusException(HttpStatus.NOT_FOUND, "The actor that you are trying to remove is not found")
     }
 
     fun update(id: Int, actor: Actor): Actor {
         return if (repository.existsById(id)) {
             actor.id = id
             repository.save(actor)
-        } else throw ResponseStatusException(HttpStatus.NOT_FOUND)
+        } else throw ResponseStatusException(HttpStatus.NOT_FOUND, "The actor that you are trying to update is not found")
     }
 }
