@@ -1,4 +1,4 @@
-# MoviesApplication
+# Movie Application
 This repository is a basic web service that uses following technologies 
   1. Spring framework
   2. Kotlin
